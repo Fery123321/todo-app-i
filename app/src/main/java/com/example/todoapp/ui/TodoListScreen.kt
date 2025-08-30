@@ -41,7 +41,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.data.Todo
+import com.example.todoapp.ui.theme.TodoAppTheme
+import java.time.LocalDateTime
 
 /**
  * Main screen displaying the list of todos with filtering and CRUD operations.
@@ -326,5 +329,136 @@ private fun EmptyState() {
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
+    }
+}
+
+// Preview functions for TodoListScreen
+@Preview(showBackground = true)
+@Composable
+fun TodoListScreenPreview() {
+    val sampleTodos = listOf(
+        Todo(
+            id = 1,
+            title = "Complete project documentation",
+            description = "Write comprehensive documentation for the TODO app",
+            isCompleted = false,
+            createdAt = LocalDateTime.now().minusDays(1),
+            updatedAt = LocalDateTime.now()
+        ),
+        Todo(
+            id = 2,
+            title = "Review code changes",
+            description = "Review the latest pull request for bug fixes",
+            isCompleted = true,
+            createdAt = LocalDateTime.now().minusHours(2),
+            updatedAt = LocalDateTime.now().minusHours(1)
+        ),
+        Todo(
+            id = 3,
+            title = "Plan next sprint",
+            description = "Discuss and plan tasks for the upcoming sprint",
+            isCompleted = false,
+            createdAt = LocalDateTime.now().minusMinutes(30),
+            updatedAt = LocalDateTime.now().minusMinutes(30)
+        )
+    )
+
+    TodoAppTheme {
+        TodoListContent(
+            todos = sampleTodos,
+            currentFilter = TodoFilter.ALL,
+            onFilterChange = {},
+            onTodoToggle = {},
+            onTodoEdit = {},
+            onTodoDelete = {},
+            onDeleteCompleted = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TodoListScreenEmptyPreview() {
+    TodoAppTheme {
+        TodoListContent(
+            todos = emptyList(),
+            currentFilter = TodoFilter.ALL,
+            onFilterChange = {},
+            onTodoToggle = {},
+            onTodoEdit = {},
+            onTodoDelete = {},
+            onDeleteCompleted = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TodoItemPreview() {
+    val sampleTodo = Todo(
+        id = 1,
+        title = "Sample Todo Item",
+        description = "This is a sample todo item for preview",
+        isCompleted = false,
+        createdAt = LocalDateTime.now().minusHours(1),
+        updatedAt = LocalDateTime.now().minusMinutes(30)
+    )
+
+    TodoAppTheme {
+        TodoItem(
+            todo = sampleTodo,
+            onToggle = {},
+            onEdit = {},
+            onDelete = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TodoItemCompletedPreview() {
+    val sampleTodo = Todo(
+        id = 1,
+        title = "Completed Todo Item",
+        description = "This todo item is completed",
+        isCompleted = true,
+        createdAt = LocalDateTime.now().minusDays(1),
+        updatedAt = LocalDateTime.now()
+    )
+
+    TodoAppTheme {
+        TodoItem(
+            todo = sampleTodo,
+            onToggle = {},
+            onEdit = {},
+            onDelete = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoadingScreenPreview() {
+    TodoAppTheme {
+        LoadingScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorScreenPreview() {
+    TodoAppTheme {
+        ErrorScreen(
+            message = "Failed to load todos. Please check your connection and try again.",
+            onRetry = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EmptyStatePreview() {
+    TodoAppTheme {
+        EmptyState()
     }
 }
